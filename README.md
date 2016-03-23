@@ -4,7 +4,7 @@ Personal Vim Configuration
 
 # How to install
 
-For now, only support apt-get | yum. I have tested on Ubuntu / Fedora Server
+For now, only support apt-get | yum. I have tested on Ubuntu / Centos Server
 
     curl https://raw.github.com/joshua7v/vim/master/install.sh -L > jvim.sh && sh jvim.sh
 
@@ -14,7 +14,7 @@ This vim configuration is designed for writing c / cpp on Linux server.
 
 ## Cheet Sheet
 
-```vim
+```vimscript
 " Plugin a.vim ---------------------------------------------
 " ;ch                       .cpp <-> .h
 " ;sch                      sub window .cpp <-> .h
