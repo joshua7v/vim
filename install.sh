@@ -32,7 +32,7 @@ prepare_install() {
     if [ -d ~/vim ]; then
         mv -f ~/vim ~/vim.old
     fi
-    cd ~/ && git clone https://bitbucket.org/joshua7v/vim > /dev/null 2>&1
+    cd ~/ && git clone https://github.com/joshua7v/vim > /dev/null 2>&1
     mv -f ~/vim/.vim ~/.vim
     mv -f ~/vim/.vimrc ~/.vimrc
     msg "\033[36m3. Cloning repos...\033[0m\n"
