@@ -129,6 +129,7 @@ Plugin 'gcmt/wildfire.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-surround'
+Plugin 'fholgado/minibufexpl.vim'
 Plugin 'a.vim'
 Plugin 'AuthorInfo'
 Plugin 'Gundo'
@@ -140,7 +141,6 @@ Plugin 'The-NERD-tree'
 Plugin 'Tagbar'
 Plugin 'Indent-Guides'
 Plugin 'DrawIt'
-Plugin 'minibufexpl.vim'
 Plugin 'XSLT-syntax'
 Plugin 'UltiSnips'
 
@@ -416,8 +416,8 @@ set undodir=~/.undo_history/
 
 " MiniBufExplorer https://github.com/fholgado/minibufexpl.vim
 map <Leader>bl :MBEToggle<cr>
-map <C-Tab> :MBEbn<cr>
-map <C-S-Tab> :MBEbp<cr>
+map <Leader>ct :MBEbn<cr>
+map <Leader>sct :MBEbp<cr>
 
 " YCM
 set completeopt=longest,menu
