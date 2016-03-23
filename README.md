@@ -6,7 +6,7 @@ Personal Vim Configuration
 
 # How to install
 
-For now, only support apt-get | yum. I have tested on Ubuntu / Centos Server
+For now, only work with apt-get | yum. I have tested on Ubuntu / Centos Server
 
     curl https://raw.github.com/joshua7v/vim/master/install.sh -L > jvim.sh && sh jvim.sh
 
@@ -62,6 +62,9 @@ This vim configuration is designed for writing c / cpp on Linux server.
 " ;bl                       toggle buffer explorer"
 " ;ct                       switch buffer
 " ;sct                      switch buffer reverse
+" ;dt                       delete buffer
+" ;wt                       wipeout buffer
+" ;ut                       unload buffer
 " d                         delete buffer
 " s                         split with current window
 " v                         vertical split with current window

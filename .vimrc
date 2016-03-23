@@ -52,6 +52,9 @@
 " ;bl                       toggle buffer explorer"
 " ;ct                       switch buffer
 " ;sct                      switch buffer reverse
+" ;dt                       delete buffer
+" ;wt                       wipeout buffer
+" ;ut                       unload buffer
 " d                         delete buffer
 " s                         split with current window
 " v                         vertical split with current window
@@ -418,9 +421,12 @@ set undofile
 set undodir=~/.undo_history/
 
 " MiniBufExplorer https://github.com/fholgado/minibufexpl.vim
-map <Leader>bl :MBEToggle<cr>
-map <Leader>ct :MBEbn<cr>
-map <Leader>sct :MBEbp<cr>
+nnoremap <Leader>bl :MBEToggle<cr>
+nnoremap <Leader>ct :MBEbn<cr>
+nnoremap <Leader>sct :MBEbp<cr>
+nnoremap <Leader>dt :MBEbd<cr>
+nnoremap <Leader>wt :MBEbw<cr>
+nnoremap <Leader>ut :MBEbun<cr>
 
 " YCM
 set completeopt=longest,menu
