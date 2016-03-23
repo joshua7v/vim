@@ -71,6 +71,7 @@ do_backup "$HOME/.vim" \
 prepare_install
 setup_vundle
 after_install
+rm -fr ~/vim
 if [ -d ~/vim.old ]; then
     mv -f ~/vim.old vim
 fi
