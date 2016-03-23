@@ -2,11 +2,15 @@
 
 Personal Vim Configuration
 
+![](http://7xjjcp.com1.z0.glb.clouddn.com/github_vim-screenshot.png)
+
 # How to install
 
 For now, only support apt-get | yum. I have tested on Ubuntu / Centos Server
 
     curl https://raw.github.com/joshua7v/vim/master/install.sh -L > jvim.sh && sh jvim.sh
+
+![](http://7xjjcp.com1.z0.glb.clouddn.com/github_vim-install.png)
 
 # Usage
 
@@ -18,6 +22,9 @@ This vim configuration is designed for writing c / cpp on Linux server.
 " Plugin a.vim ---------------------------------------------
 " ;ch                       .cpp <-> .h
 " ;sch                      sub window .cpp <-> .h
+
+" Plugin AuthorInfo ----------------------------------------
+“ ;au                       add author info
 
 " Plugin tagbar --------------------------------------------
 " ;tl                       toggle tag list
@@ -93,3 +100,12 @@ This vim configuration is designed for writing c / cpp on Linux server.
 " :zM                       close all folds
 " :zR                       open all folds
 ```
+
+## Problems
+
+### AuthorInfo
+
+- AuthorInfo plugin does not work correctly. You can fix it by:
+
+    mv ~/.vim/bundle/Authorinfo/ftPlugin ~/.vim/bundle/Authorinfo/plugin
+
