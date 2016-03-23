@@ -13,6 +13,9 @@
 " ;ch                       .cpp <-> .h
 " ;sch                      sub window .cpp <-> .h
 
+" Plugin a.vim ---------------------------------------------
+" ;au                       add author info
+
 " Plugin tagbar --------------------------------------------
 " ;tl                       toggle tag list
 " s                         change order
