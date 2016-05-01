@@ -69,8 +69,9 @@ setup_vundle() {
     export SHELL="$system_shell"
 }
 
-
-if [ $EUID -ne 0 ]; then
+USER=`whoami`
+ID=`cat /etc/passwd | grep $USER | cut -d: -f3`
+if [ $ID -eq 0 ]; then
 	sudo=''
 else
 	sudo='sudo'
