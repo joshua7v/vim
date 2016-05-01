@@ -7,14 +7,14 @@ msg() {
 setup_packages() {
     if which apt-get > /dev/null 2>&1; then
         msg "\033[36m1. Updating packages ...\033[0m\n"
-        sudo apt-get update > /dev/null
+        $sudo apt-get update > /dev/null
         msg "\033[36m2. Installing packages ...\033[0m\n"
-        sudo apt-get install -y vim ctags git ack-grep build-essential cmake python-dev python3-dev > /dev/null 2>&1
+        $sudo apt-get install -y vim ctags git ack-grep build-essential cmake python-dev python3-dev > /dev/null 2>&1
     elif which yum > /dev/null; then
         msg "\033[36m1. Updating packages ...\033[0m\n"
-        sudo yum update -y > /dev/null
+        $sudo yum update -y > /dev/null
         msg "\033[36m2. Installing packages ...\033[0m\n"
-        sudo yum install -y vim git ctags gcc-c++ ack build-essential cmake python-devel python3-devel > /dev/null 2>&1
+        $sudo yum install -y vim git ctags gcc-c++ ack build-essential cmake python-devel python3-devel > /dev/null 2>&1
     fi
 }
 
@@ -45,14 +45,19 @@ after_install() {
         mv -f ~/vim/snippets ~/.vim/bundle/UltiSnips/mysnippets
     fi
     msg "\033[36m6. Setting up YCM ... this may take 5 minutes.\033[0m\n"
-    if [ -d ~/.vim/bundle/YouCompleteMe ]; then
-        sudo dd if=/dev/zero of=/swapfile bs=250M count=8 > /dev/null 2>&1
-        sudo chmod 600 /swapfile
-        sudo mkswap /swapfile > /dev/null 2>&1
-        sudo swapon /swapfile
+    mem=`free -tm | grep "Total" | awk '{ print $2; }'`
+    if [ $mem -lt 2048 ]; then
+        if [ -d ~/.vim/bundle/YouCompleteMe ]; then
+            $sudo dd if=/dev/zero of=/swapfile bs=250M count=8 > /dev/null 2>&1
+            $sudo chmod 600 /swapfile
+            $sudo mkswap /swapfile > /dev/null 2>&1
+            $sudo swapon /swapfile
+            ~/.vim/bundle/YouCompleteMe/install.py --all > /dev/null 2>&1
+            $sudo swapoff /swapfile
+            $sudo rm /swapfile
+        fi
+    else
         ~/.vim/bundle/YouCompleteMe/install.py --all > /dev/null 2>&1
-        sudo swapoff /swapfile
-        sudo rm /swapfile
     fi
 }
 
@@ -64,6 +69,12 @@ setup_vundle() {
     export SHELL="$system_shell"
 }
 
+
+if [ $EUID -ne 0 ]; then
+	sudo=''
+else
+	sudo='sudo'
+fi
 setup_packages
 do_backup "$HOME/.vim" \
             "$HOME/.vimrc"\
@@ -76,3 +87,4 @@ if [ -d ~/vim.old ]; then
     mv -f ~/vim.old vim
 fi
 msg "\033[36m7. Install Finished. Thanks for installing.\033[0m\n"
+
