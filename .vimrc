@@ -9,6 +9,14 @@
 " |    History:                                            |
 " +--------------------------------------------------------+
 "
+" Plugin tabular -------------------------------------------
+" ;a=                       indent with =
+" ;a:                       indent with :
+" ;aa                       indent with custom
+"
+" Plugin emmet ---------------------------------------------
+" C-e                       trigger
+"
 " Plugin a.vim ---------------------------------------------
 " ;ch                       .cpp <-> .h
 " ;sch                      sub window .cpp <-> .h
@@ -149,6 +157,9 @@ Plugin 'Indent-Guides'
 Plugin 'DrawIt'
 Plugin 'XSLT-syntax'
 Plugin 'UltiSnips'
+Plugin 'neocomplcache'
+Plugin 'vim-scripts/Emmet.vim'
+Plugin 'Tabular'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -159,7 +170,7 @@ filetype plugin indent on    " required
 " +--------------------------------------------------------+
 
 " leader
-let mapleader=";"
+let mapleader=","
 "
 filetype on
 " load plugin depend on file type
@@ -342,6 +353,33 @@ nmap <Leader>tp :tprevious<CR>
 " default --fields=+iaS does not fit YCM, set to --fields=+iaSl
 let g:indexer_ctagsCommandLineOptions="--c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v--fields=+iaSl --extra=+q"
 let g:indexer_disableCtagsWarning=1
+
+" NeoComplCache
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_disableautocomplete=1
+"let g:neocomplcache_enable_underbar_completion = 1
+"let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_smart_case=1
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+set completeopt-=preview
+
+imap <C-k> <Plug>(neocomplcache_snippets_force_expand)
+smap <C-k> <Plug>(neocomplcache_snippets_force_expand)
+imap <C-l> <Plug>(neocomplcache_snippets_force_jump)
+smap <C-l> <Plug>(neocomplcache_snippets_force_jump)
+
+" Emmet
+let g:user_emmet_expandabbr_key='<C-e>'
+
+" Tabular
+let mapleader=','
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
+nmap <Leader>aa :Tabularize /
+vmap <Leader>aa :Tabularize /
 
 " Tagbar https://github.com/majutsushi/tagbar
 let tagbar_left=1

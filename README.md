@@ -12,6 +12,10 @@ For now, only work with apt-get | yum. I have tested on Ubuntu / Centos Server
 
 ![](http://7xjjcp.com1.z0.glb.clouddn.com/github_vim-install.png)
 
+Install without YCM
+
+    curl https://raw.github.com/joshua7v/vim/master/install-simple.sh -L > jvim.sh && sh jvim.sh
+
 # Usage
 
 This vim configuration is designed for writing c / cpp on Linux server.
@@ -19,6 +23,14 @@ This vim configuration is designed for writing c / cpp on Linux server.
 ## Cheet Sheet
 
 ```vimscript
+" Plugin tabular -------------------------------------------
+" ;a=                       indent with =
+" ;a:                       indent with :
+" ;aa                       indent with custom
+"
+" Plugin emmet ---------------------------------------------
+" C-e                       trigger
+"
 " Plugin a.vim ---------------------------------------------
 " ;ch                       .cpp <-> .h
 " ;sch                      sub window .cpp <-> .h
