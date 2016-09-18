@@ -213,6 +213,7 @@ map <leader>rs :source my.vim<cr> :rviminfo my.viminfo<cr>
 " theme
 set background=dark
 colorscheme molokai
+set t_Co=256
 
 " disable blink
 set gcr=a:block-blinkon0
