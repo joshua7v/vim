@@ -1,91 +1,91 @@
 #!/bin/bash
 
+APP_NAME='svim'
+REQUIRE="npm node git"
+[ -z "$VIM_PATH" ] && VIM_PATH="$HOME/.svim"
+[ -z "$REPO_URI" ] && REPO_URI='https://github.com/joshua7v/vim.git'
+
+# help functions
 msg() {
     printf '\t---> %b\n' "$1" >&2
 }
 
-setup_packages() {
-    if which apt-get > /dev/null 2>&1; then
-        msg "\033[36m1. Updating packages ...\033[0m\n"
-        $sudo apt-get update > /dev/null
-        msg "\033[36m2. Installing packages ...\033[0m\n"
-        $sudo apt-get install -y vim ctags git ack-grep build-essential cmake python-dev python3-dev > /dev/null 2>&1
-    elif which yum > /dev/null; then
-        msg "\033[36m1. Updating packages ...\033[0m\n"
-        $sudo yum update -y > /dev/null
-        msg "\033[36m2. Installing packages ...\033[0m\n"
-        $sudo yum install -y vim git ctags gcc-c++ ack build-essential cmake python-devel python3-devel > /dev/null 2>&1
+success() {
+    msg "\33[32m ✔ \33[0m ${1}${2}"
+}
+
+error() {
+    msg "\33[31m ✘ \33[0m ${1}${2}"
+    exit 1
+}
+
+warn() {
+    msg "\33[33m ⚠ \33[0m ${1}${2}"
+}
+
+info() {
+    msg "\33[32m ➜ \33[0m ${1}${2}"
+}
+
+lnif() {
+    if [ ! -e $2 ] ; then
+        ln -s $1 $2
     fi
 }
 
-do_backup() {
-    if [ -e "$1" ] || [ -e "$2" ] || [ -e "$3" ]; then
-        msg "\033[36m*. Attempting to back up your original vim configuration.\033[0m\n"
-        today=`date +%Y%m%d_%s`
-        for i in "$1" "$2" "$3"; do
-            [ -e "$i" ] && [ ! -L "$i" ] && mv -v "$i" "$i.$today";
-        done
-    fi
-}
+# check if node & npm are installed
+for i in $REQUIRE
+do
+    command -v $i >/dev/null && continue || { error "$i command not found. Please Make sure you have $i installed"; }
+done
 
-prepare_install() {
-    if [ -d ~/vim ]; then
-        mv -f ~/vim ~/vim.old
-    fi
-    cd ~/ && git clone https://github.com/joshua7v/vim > /dev/null 2>&1
-    mv -f ~/vim/.vim ~/.vim
-    mv -f ~/vim/.vimrc ~/.vimrc
-    msg "\033[36m3. Cloning repos...\033[0m\n"
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim > /dev/null 2>&1
-}
-
-after_install() {
-    msg "\033[36m5. Setting up snippets ...\033[0m\n"
-    if [ -d ~/.vim/bundle/UltiSnips ]; then
-        mv -f ~/vim/snippets ~/.vim/bundle/UltiSnips/mysnippets
-    fi
-    msg "\033[36m6. Setting up YCM ... this may take 5 minutes.\033[0m\n"
-    mem=`free -tm | grep "Total" | awk '{ print $2; }'`
-    if [ $mem -lt 2048 ]; then
-        if [ -d ~/.vim/bundle/YouCompleteMe ]; then
-            $sudo dd if=/dev/zero of=/swapfile bs=250M count=8 > /dev/null 2>&1
-            $sudo chmod 600 /swapfile
-            $sudo mkswap /swapfile > /dev/null 2>&1
-            $sudo swapon /swapfile
-            ~/.vim/bundle/YouCompleteMe/install.py --all > /dev/null 2>&1
-            $sudo swapoff /swapfile
-            $sudo rm /swapfile
-        fi
-    else
-        ~/.vim/bundle/YouCompleteMe/install.py --all > /dev/null 2>&1
-    fi
-}
-
-setup_vundle() {
-    msg "\033[36m4. Installing Plugins ...\033[0m\n"
-    local system_shell="$SHELL"
-    export SHELL="/bin/sh"
-    vim -u "$HOME/.vimrc" +PluginInstall! +PluginClean +qall
-    export SHELL="$system_shell"
-}
-
-USER=`whoami`
-ID=`cat /etc/passwd | grep $USER | cut -d: -f3`
-if [ $ID -eq 0 ]; then
-	sudo=''
+if [ ! -e "$VIM_PATH" ]; then
+    info "clone svim to $VIM_PATH"
+    mkdir -p "$VIM_PATH"
+    git clone "$REPO_URI" "$VIM_PATH"
+    ret="$?"
+    success "Successfully cloned $APP_NAME"
 else
-	sudo='sudo'
+    info "update svim in $VIM_PATH"
+    cd "$VIM_PATH" && git pull origin
+    ret="$?"
+    success "Successfully updated $APP_NAME"
 fi
-setup_packages
-do_backup "$HOME/.vim" \
-            "$HOME/.vimrc"\
-            "$HOME/.gvimrc"
-prepare_install
-setup_vundle
-after_install
-rm -fr ~/vim
-if [ -d ~/vim.old ]; then
-    mv -f ~/vim.old vim
-fi
-msg "\033[36m7. Install Finished. Thanks for installing.\033[0m\n"
 
+info "backing up current vim config"
+today=`date +%Y%m%d`
+for i in $HOME/.vim $HOME/.vimrc; do [ -e $i ] && [ ! -L $i ] && mv $i $i.$today; done
+for i in $HOME/.vim $HOME/.vimrc; do [ -L $i ] && unlink $i ; done
+success "successfully backed up your vim configuration"
+
+info "setting up symlinks"
+lnif $VIM_PATH/vimrc $HOME/.vimrc
+lnif $VIM_PATH/ $HOME/.vim
+lnif $VIM_PATH/config/tern-config $HOME/.tern-config
+lnif $VIM_PATH/config/editorconfig $HOME/.editorconfig
+lnif $VIM_PATH/config/eslintrc $HOME/.eslintrc
+success "successfully created symbol links"
+
+# install vim-plug
+if [ ! -e $VIM_PATH/autoload/plug.vim ]; then
+    info "installing Vim-Plug"
+    curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    success "successfully installed vim-plug"
+fi
+
+info "update/install plugins using vim-plug"
+system_shell=$SHELL
+export SHELL="/bin/sh"
+vim -u $VIM_PATH/vimrc +PlugInstall! +PlugClean +qall
+export SHELL=$system_shell
+
+command -v eslint >/dev/null || warn "eslint is not found from global installation, you may want to run: npm i -g eslint"
+command -v jsctags >/dev/null || warn "for better javascript tags support, it's recommend to install jstags, npm i -g git+https://github.com/ramitos/jsctags.git"
+command -v js-beautify >/dev/null || warn "you may also want to install js-beautify, npm i js-beautify -g"
+
+#vim undo dir
+if [ ! -d $HOME/.undodir ]
+then
+    mkdir -p $HOME/.undodir
+fi

@@ -1,0 +1,24 @@
+{
+  "libs": [
+    "browser",
+    "jquery",
+    "react"
+  ],
+  "loadEagerly": [
+    "src/**/*.js"
+  ],
+  "dontLoad": [
+    "lib/**/*.js"
+  ],
+  "plugins": {
+    "requirejs": {
+      "baseURL": "./",
+      "paths": {}
+    },
+    "node": {},
+    "complete_strings": {},
+    "angular": {},
+    "modules": {},
+    "es_modules": {}
+  }
+}
