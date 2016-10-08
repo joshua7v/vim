@@ -93,7 +93,7 @@ Plug 'alvan/vim-closetag'
 Plug 'mattn/emmet-vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
-Plug 'bronson/vim-trailing-whitespace'
+Plug 'ntpeters/vim-better-whitespace'
 Plug 'scrooloose/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'Chiel92/vim-autoformat', {'on': 'Autoformat'}
@@ -114,7 +114,6 @@ Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 Plug 'ruanyl/vim-fidget', {'do': 'npm install'}
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'ruanyl/vim-fixmyjs', {'on': 'Fixmyjs'}
-Plug 'moll/vim-bbye'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'junegunn/gv.vim'
@@ -145,6 +144,9 @@ Plug 'ruanyl/vim-caniuse', {'on': 'Caniuse', 'for': ['css', 'html']}
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'JulesWang/css.vim'
 au BufRead,BufNewFile *.scss set filetype=scss.css
+
+" python
+Plug 'klen/python-mode'
 
 call plug#end()
 
@@ -218,10 +220,13 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " ----------------------------------------------------------------------------
-" vim-trailing-whitespace
+" vim-better-whitespace
 " Mapping: <leader><space>
 " ----------------------------------------------------------------------------
-map <leader><space> :FixWhitespace<cr>
+map <leader><space> :StripWhitespace<cr>
+highlight ExtraWhitespace ctermbg=red
+let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help']
+let g:better_whitespace_filetypes_verbosity=1
 
 " ----------------------------------------------------------------------------
 " vim-bookmarks
@@ -277,9 +282,13 @@ vmap <S-SPACE> <Plug>(wildfire-water)
 " ----------------------------------------------------------------------------
 " YouCompleteMe
 " ----------------------------------------------------------------------------
+set completeopt=longest,menu
 let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_complete_in_strings = 1
+let g:ycm_complete_in_strings = 1
 let g:ycm_complete_in_comments = 1
+let g:ycm_confirm_extra_conf=0
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_key_list_select_completion = ['<Tab>', '<C-j>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 let g:ycm_semantic_triggers =  {
@@ -385,12 +394,20 @@ autocmd FileType javascript,json,html,css,scss noremap <buffer>  <Leader>f :Auto
 " ----------------------------------------------------------------------------
 " vim-bbye
 " ----------------------------------------------------------------------------
-nnoremap qq :Bdelete<cr>
+nnoremap qq :bd<cr>
 
 " ----------------------------------------------------------------------------
 " BufOnly.vim
 " ----------------------------------------------------------------------------
 nnoremap <silent> qo :BufOnly<CR>
+
+" ----------------------------------------------------------------------------
+" pymode
+" ----------------------------------------------------------------------------
+let g:pymode_rope_goto_definition_bind="<Leader>d"
+let g:pymode_doc_bind="<Leader>dd"
+let g:pymode_virtualenv = 1
+autocmd FileType python set colorcolumn=120
 
 filetype plugin indent on
 syntax enable
@@ -527,6 +544,11 @@ autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 " Key Mappings:Customized keys
 " ----------------------------------------------------------------------------
 
+nnoremap <Leader>; A;<ESC>
+nnoremap <Leader>c A,<ESC>
+nnoremap <Leader>. A.<ESC>
+nnoremap <Leader>\ A \<ESC>
+
 command! W w !sudo tee % > /dev/null
 
 " replace currently selected text with default register without yanking it
@@ -650,3 +672,12 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
+
+function s:SetCursorLine()
+    set cursorline
+    hi cursorline cterm=none ctermbg=18
+endfunction
+autocmd VimEnter * call s:SetCursorLine()
+
+highlight Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
+highlight PmenuSel ctermfg=0 ctermbg=7 guifg=#AFD700 guibg=#106900
