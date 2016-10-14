@@ -245,7 +245,8 @@ nnoremap <Leader>x :BookmarkClearAll<CR>
 " ----------------------------------------------------------------------------
 " Emmet
 " ----------------------------------------------------------------------------
-let g:user_emmet_expandabbr_key='<C-e>'
+let g:user_emmet_leader_key='<C-e>'
+let g:user_emmet_mode='a'
 
 " ----------------------------------------------------------------------------
 " vim-maximizer
@@ -283,6 +284,7 @@ vmap <S-SPACE> <Plug>(wildfire-water)
 " YouCompleteMe
 " ----------------------------------------------------------------------------
 set completeopt=longest,menu
+let g:ycm_server_python_interpreter = '/usr/bin/python2.7'
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_complete_in_strings = 1
 let g:ycm_complete_in_comments = 1
@@ -407,6 +409,9 @@ nnoremap <silent> qo :BufOnly<CR>
 let g:pymode_rope_goto_definition_bind="<Leader>d"
 let g:pymode_doc_bind="<Leader>dd"
 let g:pymode_virtualenv = 1
+let g:pymode_rope_lookup_project = 0
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope = 0
 autocmd FileType python set colorcolumn=120
 
 filetype plugin indent on
@@ -681,3 +686,5 @@ autocmd VimEnter * call s:SetCursorLine()
 
 highlight Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
 highlight PmenuSel ctermfg=0 ctermbg=7 guifg=#AFD700 guibg=#106900
+
+inoremap jj <ESC>
