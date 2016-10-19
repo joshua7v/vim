@@ -686,5 +686,7 @@ autocmd VimEnter * call s:SetCursorLine()
 
 highlight Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
 highlight PmenuSel ctermfg=0 ctermbg=7 guifg=#AFD700 guibg=#106900
+highlight search ctermfg=black                                                                                          
+highlight incsearch ctermfg=black 
 
 inoremap jj <ESC>
