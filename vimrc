@@ -84,7 +84,8 @@ Plug 'Lokaltog/vim-easymotion'
 " Plug 'unblevable/quick-scope'
 
 " fast edit
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' 
+Plug 'honza/vim-snippets'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-repeat'
 Plug 'gcmt/wildfire.vim'
@@ -111,9 +112,9 @@ Plug 'szw/vim-maximizer'
 Plug 'thinca/vim-quickrun'
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
-Plug 'ruanyl/vim-fidget', {'do': 'npm install'}
+"Plug 'ruanyl/vim-fidget', {'do': 'npm install'}
 Plug 'MattesGroeger/vim-bookmarks'
-Plug 'ruanyl/vim-fixmyjs', {'on': 'Fixmyjs'}
+"Plug 'ruanyl/vim-fixmyjs', {'on': 'Fixmyjs'}
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'junegunn/gv.vim'
@@ -125,21 +126,22 @@ Plug 'tomasr/molokai'
 " search
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
-Plug 'dyng/ctrlsf.vim', {'on': '<Plug>CtrlSFVwordExec'}
+"Plug 'dyng/ctrlsf.vim', {'on': '<Plug>CtrlSFVwordExec'}
+Plug 'dyng/ctrlsf.vim'
 Plug 'ggVGc/vim-fuzzysearch'
-Plug 'rking/ag.vim'
+"Plug 'rking/ag.vim'
 
 " javascript
 Plug 'pangloss/vim-javascript'
 Plug 'marijnh/tern_for_vim', {'do': 'npm install'}
 Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'kchmck/vim-coffee-script'
+"Plug 'kchmck/vim-coffee-script'
 Plug 'heavenshell/vim-jsdoc', {'for': ['javascript', 'jsx']}
-Plug 'burnettk/vim-angular'
+"Plug 'burnettk/vim-angular'
 Plug 'mxw/vim-jsx'
 
 " CSS
-Plug 'ruanyl/vim-caniuse', {'on': 'Caniuse', 'for': ['css', 'html']}
+"Plug 'ruanyl/vim-caniuse', {'on': 'Caniuse', 'for': ['css', 'html']}
 "Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'JulesWang/css.vim'
@@ -149,6 +151,45 @@ au BufRead,BufNewFile *.scss set filetype=scss.css
 Plug 'klen/python-mode'
 
 call plug#end()
+
+" ----------------------------------------------------------------------------
+" MatchTagAlways
+" ----------------------------------------------------------------------------
+let g:mta_filetypes = {
+    \ 'html': 1,
+    \ 'xhtml': 1,
+    \ 'xml': 1,
+    \ 'jinja': 1,
+    \ 'javascript.jsx': 1,
+    \ 'javascript': 1,
+    \}
+nnoremap <leader>% :MtaJumpToOtherTag<cr>
+let g:mta_use_matchparen_group = 0
+let g:mta_set_default_matchtag_color = 1
+highlight MatchTag ctermfg=black
+
+" ----------------------------------------------------------------------------
+" vim-search-pulse
+" ----------------------------------------------------------------------------
+let g:vim_search_pulse_mode = 'pattern'
+let g:vim_search_pulse_duration = 400
+
+" ----------------------------------------------------------------------------
+" vim-closetag
+" ----------------------------------------------------------------------------
+let g:closetag_filenames = "*.html,*.xhtml,*.js"
+
+" ----------------------------------------------------------------------------
+" NERDCommenter
+" ----------------------------------------------------------------------------
+let g:NERDSpaceDelims = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDTrimTrailingWhitespace = 1
+
+" ----------------------------------------------------------------------------
+" gv
+" ----------------------------------------------------------------------------
+nnoremap <leader>gv :GV<cr>
 
 " ----------------------------------------------------------------------------
 " NERDTree
@@ -198,7 +239,9 @@ nnoremap <Leader>fu :CtrlPFunky<Cr>
 " ----------------------------------------------------------------------------
 " ctrlsf.vim
 " ----------------------------------------------------------------------------
+let g:ctrlsf_ackprg = 'ack'
 vmap <Leader>s <Plug>CtrlSFVwordExec
+hi def link ctrlsfMatch Search
 
 " ----------------------------------------------------------------------------
 " ag.vim
@@ -284,7 +327,6 @@ vmap <S-SPACE> <Plug>(wildfire-water)
 " YouCompleteMe
 " ----------------------------------------------------------------------------
 set completeopt=longest,menu
-let g:ycm_server_python_interpreter = '/usr/bin/python2.7'
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_complete_in_strings = 1
 let g:ycm_complete_in_comments = 1
@@ -371,14 +413,17 @@ let g:jsx_ext_required = 0 " Allow JSX in normal JS files"
 " vim-jsdoc
 " ----------------------------------------------------------------------------
 let g:jsdoc_default_mapping = 0
-autocmd FileType javascript nnoremap <Leader>dd :JsDoc<CR>
+let g:jsdoc_enable_es6 = 1
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_input_description = 1
+autocmd FileType javascript nnoremap <Leader>d :JsDoc<CR>
 
 " ----------------------------------------------------------------------------
 " tern_for_vim
 " ----------------------------------------------------------------------------
 let tern_show_signature_in_pum = 1
 let tern_show_argument_hints = 'on_hold'
-autocmd FileType javascript nnoremap <Leader>d :TernDef<CR>
+autocmd FileType javascript nnoremap <Leader>dd :TernDef<CR>
 autocmd FileType javascript setlocal omnifunc=tern#Complete
 
 " ----------------------------------------------------------------------------
@@ -406,12 +451,9 @@ nnoremap <silent> qo :BufOnly<CR>
 " ----------------------------------------------------------------------------
 " pymode
 " ----------------------------------------------------------------------------
-let g:pymode_rope_goto_definition_bind="<Leader>d"
-let g:pymode_doc_bind="<Leader>dd"
+let g:pymode_rope_goto_definition_bind="<Leader>dd"
+let g:pymode_doc_bind="<Leader>d"
 let g:pymode_virtualenv = 1
-let g:pymode_rope_lookup_project = 0
-let g:pymode_rope_complete_on_dot = 0
-let g:pymode_rope = 0
 autocmd FileType python set colorcolumn=120
 
 filetype plugin indent on
@@ -521,7 +563,9 @@ if has('statusline')
     set laststatus=2
     set statusline=%<%f\                     " Filename
     set statusline+=%w%h%m%r                 " Options
-    set statusline+=%{fugitive#statusline()} " Git Hotness
+    if has('fugitive')
+        set statusline+=%{fugitive#statusline()} " Git Hotness
+    endif
     set statusline+=\ [%{&ff}/%Y]            " Filetype
     set statusline+=\ [%{getcwd()}]          " Current dir
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
@@ -553,6 +597,8 @@ nnoremap <Leader>; A;<ESC>
 nnoremap <Leader>c A,<ESC>
 nnoremap <Leader>. A.<ESC>
 nnoremap <Leader>\ A \<ESC>
+nnoremap <Leader>cl :CtrlPClearCache<cr>
+nnoremap <Leader>cla :CtrlPClearAllCache<cr>
 
 command! W w !sudo tee % > /dev/null
 
@@ -669,14 +715,14 @@ hi! link ShowMarksHLl DiffAdd
 hi! link ShowMarksHLu DiffChange
 
 " for error highlight
-highlight clear SpellBad
-highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
-highlight clear SpellCap
-highlight SpellCap term=underline cterm=underline
-highlight clear SpellRare
-highlight SpellRare term=underline cterm=underline
-highlight clear SpellLocal
-highlight SpellLocal term=underline cterm=underline
+hi clear SpellBad
+hi SpellBad term=standout ctermfg=1 term=underline cterm=underline
+hi clear SpellCap
+hi SpellCap term=underline cterm=underline
+hi clear SpellRare
+hi SpellRare term=underline cterm=underline
+hi clear SpellLocal
+hi SpellLocal term=underline cterm=underline
 
 function s:SetCursorLine()
     set cursorline
@@ -684,9 +730,11 @@ function s:SetCursorLine()
 endfunction
 autocmd VimEnter * call s:SetCursorLine()
 
-highlight Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
-highlight PmenuSel ctermfg=0 ctermbg=7 guifg=#AFD700 guibg=#106900
-highlight search ctermfg=black                                                                                          
-highlight incsearch ctermfg=black 
-
+hi Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
+hi Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
+hi PmenuSel ctermfg=0 ctermbg=7 guifg=#AFD700 guibg=#106900
+hi search ctermfg=black
+hi incsearch ctermfg=black
 inoremap jj <ESC>
+
+hi MatchParen ctermfg=black

@@ -80,6 +80,9 @@ export SHELL="/bin/sh"
 vim -u $VIM_PATH/vimrc +PlugInstall! +PlugClean +qall
 export SHELL=$system_shell
 
+info "link snippets"
+lnif $VIM_PATH/snippets/javascript-s-react.snippets $HOME/.vim/bundle/vim-snippets/snippets/javascript/javascript-s-react.snippets
+
 command -v eslint >/dev/null || warn "eslint is not found from global installation, you may want to run: npm i -g eslint"
 command -v jsctags >/dev/null || warn "for better javascript tags support, it's recommend to install jstags, npm i -g git+https://github.com/ramitos/jsctags.git"
 command -v js-beautify >/dev/null || warn "you may also want to install js-beautify, npm i js-beautify -g"
