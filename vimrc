@@ -469,6 +469,7 @@ colorscheme violet
 
 set background=dark
 set t_Co=256
+set t_ut=
 set history=200           " history: number of command-lines remembered
 set autoread              " auto reload file after being modified
 set shortmess=atI         " do not show initial page
@@ -733,9 +734,9 @@ function s:SetCursorLine()
 endfunction
 autocmd VimEnter * call s:SetCursorLine()
 
-hi Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
-hi Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
-hi PmenuSel ctermfg=0 ctermbg=7 guifg=#AFD700 guibg=#106900
+" hi Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
+" hi Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
+" hi PmenuSel ctermfg=0 ctermbg=7 guifg=#AFD700 guibg=#106900
 hi search ctermfg=black
 hi incsearch ctermfg=black
 inoremap jj <ESC>
