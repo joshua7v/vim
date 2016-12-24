@@ -54,6 +54,7 @@
 " ----------------------------------------------------------------------------
 
 set nocompatible
+set termguicolors
 
 " ----------------------------------------------------------------------------
 " Vim-Plug:Plgin management and setting
@@ -69,6 +70,11 @@ let g:mapleader = ','
 " :PlugInstall!    update
 " :PlugClean       remove plugin not in list
 " ----------------------------------------------------------------------------
+
+" theme
+Plug 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
+Plug 'ashfinal/vim-colors-violet'
 
 " display
 Plug 'Valloric/MatchTagAlways'
@@ -118,10 +124,6 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'junegunn/gv.vim'
-
-" theme
-Plug 'altercation/vim-colors-solarized'
-Plug 'tomasr/molokai'
 
 " search
 Plug 'ctrlpvim/ctrlp.vim'
@@ -385,7 +387,7 @@ let g:syntastic_error_symbol='✘'
 let g:syntastic_warning_symbol='❗'
 let g:syntastic_style_error_symbol='»'
 let g:syntastic_style_warning_symbol='•'
-let g:syntastic_check_on_open=1
+let g:syntastic_check_on_open=0
 let g:syntastic_enable_highlighting = 0
 let g:syntastic_javascript_checkers = ['eslint']
 
@@ -462,7 +464,8 @@ syntax on
 
 " colorscheme solarized
 " colorscheme molokai
-colorscheme desert
+" colorscheme desert
+colorscheme violet
 
 set background=dark
 set t_Co=256
@@ -726,7 +729,7 @@ hi SpellLocal term=underline cterm=underline
 
 function s:SetCursorLine()
     set cursorline
-    hi cursorline cterm=none ctermbg=18
+    hi cursorline cterm=none ctermbg=235
 endfunction
 autocmd VimEnter * call s:SetCursorLine()
 
@@ -738,3 +741,13 @@ hi incsearch ctermfg=black
 inoremap jj <ESC>
 
 hi MatchParen ctermfg=black
+
+" change background
+nnoremap <silent> <Leader>b :call ToggleBackground()<CR>
+function! ToggleBackground()
+    if &background == "light"
+        set background=dark
+    else
+        set background=light
+    endif
+endfunction
