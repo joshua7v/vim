@@ -739,8 +739,9 @@ autocmd VimEnter * call s:SetCursorLine()
 " hi Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
 " hi Pmenu ctermfg=7 ctermbg=0 guifg=#005f87 guibg=#EEE8D5
 " hi PmenuSel ctermfg=0 ctermbg=7 guifg=#AFD700 guibg=#106900
-hi search ctermfg=black
-hi incsearch ctermfg=black
+" hi search ctermfg=black
+" hi incsearch ctermfg=black
+
 inoremap jj <ESC>
 
 hi MatchParen ctermfg=black
