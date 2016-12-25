@@ -54,7 +54,9 @@
 " ----------------------------------------------------------------------------
 
 set nocompatible
-set termguicolors
+if has('termguicolors')
+    set termguicolors
+endif
 
 " ----------------------------------------------------------------------------
 " Vim-Plug:Plgin management and setting
