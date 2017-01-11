@@ -742,6 +742,10 @@ autocmd VimEnter * call s:SetCursorLine()
 " hi search ctermfg=black
 " hi incsearch ctermfg=black
 
+hi BookMarkLine ctermbg=black ctermfg=none
+hi BookMarkSign ctermbg=none ctermfg=none
+hi LineNr ctermfg=darkgrey guifg=#777777
+
 inoremap jj <ESC>
 
 hi MatchParen ctermfg=black
