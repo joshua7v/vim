@@ -167,8 +167,14 @@ call plug#end()
 " ----------------------------------------------------------------------------
 let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
+" autocmd FileType typescript setlocal balloonexpr=tsuquyomi#hint()
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow"
+autocmd FileType typescript nnoremap <Leader>dd :TsuDefinition<CR>
+autocmd FileType typescript nnoremap <Leader>re :TsuRenameSymbol<CR>
+autocmd FileType typescript nnoremap <Leader>rea :TsuRenameSymbolC<CR>
+autocmd FileType typescript nnoremap <Leader>im :TsuImport<CR>
+autocmd FileType typescript nmap <buffer> <Leader>h : <C-u>echo tsuquyomi#hint()<CR>
 
 " ----------------------------------------------------------------------------
 " MatchTagAlways
