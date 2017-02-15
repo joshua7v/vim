@@ -144,6 +144,12 @@ Plug 'heavenshell/vim-jsdoc', {'for': ['javascript', 'jsx']}
 "Plug 'burnettk/vim-angular'
 Plug 'mxw/vim-jsx'
 
+" typescript
+Plug 'leafgarland/typescript-vim'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'Shougo/vimproc.vim', {'do': 'make'}
+Plug 'Quramy/tsuquyomi'"
+
 " CSS
 "Plug 'ruanyl/vim-caniuse', {'on': 'Caniuse', 'for': ['css', 'html']}
 "Plug 'hail2u/vim-css3-syntax'
@@ -157,6 +163,14 @@ Plug 'klen/python-mode'
 call plug#end()
 
 " ----------------------------------------------------------------------------
+" typescript-vim
+" ----------------------------------------------------------------------------
+let g:typescript_compiler_binary = 'tsc'
+let g:typescript_compiler_options = ''
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow"
+
+" ----------------------------------------------------------------------------
 " MatchTagAlways
 " ----------------------------------------------------------------------------
 let g:mta_filetypes = {
@@ -166,6 +180,7 @@ let g:mta_filetypes = {
     \ 'jinja': 1,
     \ 'javascript.jsx': 1,
     \ 'javascript': 1,
+    \ 'typescript': 1,
     \}
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 let g:mta_use_matchparen_group = 0
@@ -181,7 +196,7 @@ let g:vim_search_pulse_duration = 400
 " ----------------------------------------------------------------------------
 " vim-closetag
 " ----------------------------------------------------------------------------
-let g:closetag_filenames = "*.html,*.xhtml,*.js"
+let g:closetag_filenames = "*.html,*.xhtml,*.js,*.jsx,*.ts"
 
 " ----------------------------------------------------------------------------
 " NERDCommenter
@@ -346,7 +361,7 @@ let g:ycm_semantic_triggers =  {
             \   'cpp,objcpp' : ['->', '.', '::'],
             \   'perl' : ['->'],
             \   'php' : ['->', '::', '(', 'use ', 'namespace ', '\'],
-            \   'cs,java,typescript,d,python,perl6,scala,vb,elixir,go' : ['.', 're!(?=[a-zA-Z]{3,4})'],
+            \   'cs,java,d,python,perl6,scala,vb,elixir,go' : ['.', 're!(?=[a-zA-Z]{3,4})'],
             \   'html': ['<', '"', '</', ' '],
             \   'vim' : ['re![_a-za-z]+[_\w]*\.'],
             \   'ruby' : ['.', '::'],
@@ -355,6 +370,7 @@ let g:ycm_semantic_triggers =  {
             \   'haskell' : ['.', 're!.'],
             \   'scss,css': [ 're!^\s{2,4}', 're!:\s+' ],
             \   'javascript': ['.', 're!(?=[a-zA-Z]{3,4})'],
+            \   'typescript': ['.'],
             \ }
 
 " ----------------------------------------------------------------------------
@@ -392,6 +408,8 @@ let g:syntastic_style_warning_symbol='•'
 let g:syntastic_check_on_open=0
 let g:syntastic_enable_highlighting = 0
 let g:syntastic_javascript_checkers = ['eslint']
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi']
 
 " ----------------------------------------------------------------------------
 " vim-markdown
@@ -591,7 +609,7 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
-autocmd FileType javascript,json,css,scss,html set tabstop=2 shiftwidth=2 expandtab ai
+autocmd FileType javascript,json,css,scss,html,ts,javascript.jsx set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 
