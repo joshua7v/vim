@@ -126,6 +126,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'junegunn/gv.vim'
+Plug 'rizzatti/dash.vim'
 
 " search
 Plug 'ctrlpvim/ctrlp.vim'
