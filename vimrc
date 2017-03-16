@@ -85,6 +85,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'gorodinskiy/vim-coloresque'
 Plug 'airblade/vim-gitgutter'
 Plug 'inside/vim-search-pulse'
+Plug 'Yggdroot/indentLine'
 
 " fast move
 Plug 'vim-scripts/matchit.zip'
@@ -92,7 +93,7 @@ Plug 'Lokaltog/vim-easymotion'
 " Plug 'unblevable/quick-scope'
 
 " fast edit
-Plug 'SirVer/ultisnips' 
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-repeat'
@@ -216,6 +217,12 @@ let g:NERDTrimTrailingWhitespace = 1
 " gv
 " ----------------------------------------------------------------------------
 nnoremap <leader>gv :GV<cr>
+
+" ----------------------------------------------------------------------------
+" indentLine
+" ----------------------------------------------------------------------------
+let g:indentLine_enabled = 0
+nnoremap <leader>n :IndentLinesToggle<cr>
 
 " ----------------------------------------------------------------------------
 " NERDTree
@@ -361,6 +368,7 @@ let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_key_list_select_completion = ['<Tab>', '<C-j>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+" let g:ycm_path_to_python_interpreter='/usr/local/bin/python3'
 let g:ycm_semantic_triggers =  {
             \   'c' : ['->', '.'],
             \   'objc' : ['->', '.'],
