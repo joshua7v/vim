@@ -93,8 +93,8 @@ Plug 'Lokaltog/vim-easymotion'
 " Plug 'unblevable/quick-scope'
 
 " fast edit
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-repeat'
 Plug 'gcmt/wildfire.vim'
@@ -127,7 +127,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'junegunn/gv.vim'
-Plug 'rizzatti/dash.vim'
+" Plug 'rizzatti/dash.vim'
 
 " search
 Plug 'ctrlpvim/ctrlp.vim'
@@ -360,6 +360,8 @@ vmap <S-SPACE> <Plug>(wildfire-water)
 " YouCompleteMe
 " ----------------------------------------------------------------------------
 set completeopt=longest,menu
+let g:ycm_key_invoke_completion = '<C-l>'
+let g:ycm_min_num_of_chars_for_completion = 5
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_complete_in_strings = 1
 let g:ycm_complete_in_comments = 1
